@@ -26,6 +26,7 @@ class ProductsTable
                     ->searchable(isIndividual: true, isGlobal: false),
                 TextColumn::make('status'),
                 TextColumn::make('category.name'),
+                TextColumn::make('tags.name'),
                 TextColumn::make('description'),
             ])
             ->defaultSort('id', 'desc')
