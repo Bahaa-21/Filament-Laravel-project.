@@ -36,6 +36,7 @@ class User extends Authenticatable implements FilamentUser
         'remember_token',
     ];
 
+    protected $casts = ['is_admin' => 'boolean'];
     /**
      * Get the attributes that should be cast.
      *
@@ -51,6 +52,6 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->email == "admin@test.com";
+        return $this->is_admin == true;
     }
 }
