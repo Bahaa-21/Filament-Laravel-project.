@@ -26,15 +26,16 @@ class ProductsTable
                 TextColumn::make('id')
                     ->sortable(),
                 TextColumn::make('name')
+                    ->url(fn(Product $record): string => ProductResource::getUrl('view', ['record' => $record]))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('price')
                     ->money('USD', 100, 'en')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('status'),
+                TextColumn::make('status')->badge(),
                 TextColumn::make('category.name'),
-                TextColumn::make('tags.name'),
+                TextColumn::make('tags.name')->badge(),
                 TextColumn::make('description'),
             ])
             ->defaultSort('id', 'desc')
@@ -64,7 +65,7 @@ class ProductsTable
                                 $data['created_until'],
                                 fn(Builder $query, $data): Builder => $query->whereDate('created_at', '<=', $data)
                             );
-                    })
+                    }),
             ])
             ->recordActions([
                 ViewAction::make(),
