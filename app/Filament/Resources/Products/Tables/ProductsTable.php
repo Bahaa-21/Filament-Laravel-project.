@@ -7,10 +7,12 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductsTable
 {
@@ -38,6 +40,28 @@ class ProductsTable
                     ->relationship('category', 'name'),
                 SelectFilter::make('status')
                     ->options(ProductStatusEnum::class),
+                Filter::make('created_from')
+                    ->schema([
+                        DatePicker::make('created_from'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn(Builder $query, $data): Builder => $query->whereDate('created_at', '>=', $data)
+                            );
+                    }),
+                Filter::make('created_until')
+                    ->schema([
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_until'],
+                                fn(Builder $query, $data): Builder => $query->whereDate('created_at', '<=', $data)
+                            );
+                    })
             ])
             ->recordActions([
                 EditAction::make(),
