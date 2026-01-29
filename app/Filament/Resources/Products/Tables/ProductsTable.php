@@ -33,6 +33,9 @@ class ProductsTable
                 TextColumn::make('category.name'),
                 TextColumn::make('tags.name'),
                 TextColumn::make('description'),
+                TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime()
             ])
             ->defaultSort('id', 'desc')
             ->filters([
