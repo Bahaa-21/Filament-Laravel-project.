@@ -11,6 +11,8 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -25,18 +27,45 @@ class ProductsTable
             ->columns([
                 TextColumn::make('id')
                     ->sortable(),
+
+                ImageColumn::make('image'),
+
                 TextColumn::make('name')
                     ->url(fn(Product $record): string => ProductResource::getUrl('view', ['record' => $record]))
                     ->sortable()
                     ->searchable(),
+
                 TextColumn::make('price')
                     ->money('USD', 100, 'en')
                     ->sortable()
                     ->searchable(),
+
                 TextColumn::make('status')->badge(),
+
+                TextColumn::make('quantity'),
+
+                TextColumn::make('sku'),
+
+                TextColumn::make('slug'),
+
+                IconColumn::make('is_visible')->boolean(),
+
+                IconColumn::make('is_featured')->boolean(),
+
                 TextColumn::make('category.name'),
+
+                TextColumn::make('brand.name'),
+
                 TextColumn::make('tags.name')->badge(),
+
                 TextColumn::make('description'),
+
+                TextColumn::make('published_at')
+                    ->dateTime(),
+
+                TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime()
             ])
             ->defaultSort('id', 'desc')
             ->filters([

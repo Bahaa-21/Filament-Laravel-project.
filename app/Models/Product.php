@@ -13,17 +13,19 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price', 'description', 'status', 'category_Id'];
+    protected $fillable = ['name', 'price', 'description', 'status', 'category_Id', 'sku', 'slug', 'quantity', 'image', 'is_visible', 'is_featured', 'published_at'];
 
     protected $casts = [
         'status' => ProductStatusEnum::class,
+        'is_visible' => 'boolean',
+        'is_featured' => 'boolean'
     ];
 
     protected function price(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value,
-            set: fn ($value) => $value,
+            get: fn($value) => $value,
+            set: fn($value) => $value,
         );
     }
 
@@ -35,5 +37,10 @@ class Product extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 }
