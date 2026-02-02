@@ -1,0 +1,29 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Brand;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Brand>
+ */
+class BrandFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->unique()->company(),
+            'slug' => fake()->unique()->slug(),
+            'url' => fake()->optional()->url(),
+            'primary_hax' => fake()->optional()->hexColor(),
+            'is_visible' => fake()->boolean(70),
+            'description' => fake()->optional()->paragraph(),
+        ];
+    }
+}
