@@ -13,7 +13,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price', 'description', 'status', 'category_Id', 'sku', 'slug', 'quantity', 'image', 'is_visible', 'is_featured', 'published_at'];
+    protected $fillable = ['name', 'price', 'description', 'status', 'category_Id', 'brand_id', 'sku', 'slug', 'quantity', 'image', 'is_visible', 'is_featured', 'published_at'];
 
     protected $casts = [
         'status' => ProductStatusEnum::class,

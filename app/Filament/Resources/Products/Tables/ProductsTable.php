@@ -25,9 +25,6 @@ class ProductsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->sortable(),
-
                 ImageColumn::make('image'),
 
                 TextColumn::make('name')
