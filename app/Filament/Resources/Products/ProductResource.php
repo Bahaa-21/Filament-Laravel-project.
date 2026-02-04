@@ -24,6 +24,9 @@ class ProductResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Shop';
 
+    protected static ?int $navigationSort = 0;
+
+
     public static function form(Schema $schema): Schema
     {
         return ProductForm::configure($schema);
@@ -46,7 +49,7 @@ class ProductResource extends Resource
         return [
             'index' => ListProducts::route('/'),
             'create' => CreateProduct::route('/create'),
-            'view' => ShowProduct::route('/{record}'),
+            //'view' => ShowProduct::route('/{record}'),
             'edit' => EditProduct::route('/{record}/edit'),
         ];
     }
