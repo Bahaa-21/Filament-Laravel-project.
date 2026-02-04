@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Brand>
@@ -18,11 +19,10 @@ class BrandFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->company(),
-            'slug' => fake()->unique()->slug(),
+            'name' => fake()->words(2,true),
             'url' => fake()->optional()->url(),
             'primary_hax' => fake()->optional()->hexColor(),
-            'is_visible' => fake()->boolean(70),
+            'is_visible' => fake()->boolean(5),
             'description' => fake()->optional()->paragraph(),
         ];
     }
