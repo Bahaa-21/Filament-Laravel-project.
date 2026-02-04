@@ -16,8 +16,20 @@ class TagFactory extends Factory
      */
     public function definition(): array
     {
+        $tagTitles = [
+            'New Arrival',
+            'Sale',
+            'Popular',
+            'Trending',
+            'Exclusive',
+            'Limited Edition',
+            'Bestseller',
+            'Featured',
+            'Eco-Friendly',
+            'Top Rated'
+        ];
         return [
-            'name' => fake()->text(5)
+            'name' => fake()->unique()->randomElement($tagTitles)
         ];
     }
 }
