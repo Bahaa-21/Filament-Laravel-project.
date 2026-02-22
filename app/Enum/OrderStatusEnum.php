@@ -2,13 +2,31 @@
 
 namespace App\Enum;
 
-enum OrderStatusEnum: string
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasLabel;
+
+enum OrderStatusEnum: string  implements HasColor, HasLabel
 {
-    const PENDING = 'pending';
+    case PENDING = 'pending';
 
-    const PROCESSING = 'processing';
+    case PROCESSING = 'processing';
 
-    const COMPLETED = 'completed';
+    case COMPLETED = 'completed';
 
-    const DECLINED = 'declined';
+    case DECLINED = 'declined';
+
+    public function getLabel(): string
+    {
+        return $this->value;
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::PENDING => 'warning',
+            self::PROCESSING => 'warning',
+            self::COMPLETED => 'success',
+            self::DECLINED => 'danger',
+        };
+    }
 }

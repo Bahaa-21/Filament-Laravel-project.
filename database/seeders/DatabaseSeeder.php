@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\OrderItem;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -23,6 +24,8 @@ class DatabaseSeeder extends Seeder
                 CategorySeeder::class,
                 TagSeeder::class,
                 ProductSeeder::class,
+                OrderSeeder::class,
+                OrderItemSeeder::class
             ]
         );
     }
