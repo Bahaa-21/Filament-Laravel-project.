@@ -12,7 +12,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $guarded = [];
+    protected $fillable = [
+        'user_Id',
+        'number',
+        'status',
+        'total_price',
+        'shipping_price',
+        'nots'
+    ];
 
     protected $casts = [
         'status' => OrderStatusEnum::class
