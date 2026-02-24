@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products;
 
+use App\Enum\ProductStatusEnum;
 use App\Filament\Resources\Products\Pages\CreateProduct;
 use App\Filament\Resources\Products\Pages\EditProduct;
 use App\Filament\Resources\Products\Pages\ListProducts;
@@ -22,9 +23,23 @@ class ProductResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBolt;
 
+    protected static string|BackedEnum|null $activeNavigationIcon = 'heroicon-o-check-badge';
+
     protected static string|\UnitEnum|null $navigationGroup = 'Shop';
 
     protected static ?int $navigationSort = 0;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', ProductStatusEnum::SOLD_OUT->value)->count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::where('status', ProductStatusEnum::SOLD_OUT->value)->count() > 0
+            ? 'danger'
+            : 'primary';
+    }
 
 
     public static function form(Schema $schema): Schema
