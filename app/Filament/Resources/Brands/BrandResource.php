@@ -13,6 +13,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class BrandResource extends Resource
 {
@@ -23,6 +25,27 @@ class BrandResource extends Resource
     protected static string|\UnitEnum|null $navigationGroup = 'Shop';
 
     protected static ?int $navigationSort = 2;
+
+    protected static int $globalSearchResultsLimit = 20;
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'description'];
+    }
+
+    public static function getGlobalSearchableResultDetails(Model $record): array
+    {
+        return [
+            'Brand' => $record->brand->name
+        ];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['brand']);
+    }
 
     public static function form(Schema $schema): Schema
     {

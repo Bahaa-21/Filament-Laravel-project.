@@ -30,6 +30,11 @@ class OrderResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['number', 'status', 'total_price', 'shipping_price', 'nots'];
+    }
+
     public static function form(Schema $schema): Schema
     {
         return OrderForm::configure($schema);
