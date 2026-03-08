@@ -11,7 +11,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'name', 'is_visible', 'description', 'parent_id'];
+    protected $fillable = ['id', 'name', 'is_visible', 'description', 'parent_Id'];
 
     protected $casts = ['is_visible' => 'boolean'];
 

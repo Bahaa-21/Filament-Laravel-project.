@@ -5,12 +5,18 @@ namespace App\Filament\Resources\Categories;
 use App\Filament\Resources\Categories\Pages\ManageCategories;
 use App\Models\Category;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -32,8 +38,34 @@ class CategoryResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->required(),
+                Group::make()
+                    ->schema([
+                        Section::make('Informaiton')
+                            ->schema([
+                                TextInput::make('name')
+                                    ->label('Category Name')
+                                    ->required(),
+
+                                MarkdownEditor::make('description')
+                                    ->label("Description")
+                            ])
+                    ]),
+
+                Group::make()
+                    ->schema([
+                        Section::make('Status')
+                            ->schema([
+                                Toggle::make("is_visible")
+                                    ->label('Visibility')
+                                    ->default(true),
+                            ]),
+
+                        Section::make('Associations')
+                            ->schema([
+                                Select::make('parent_Id')
+                                    ->relationship('parent', 'name')
+                            ])
+                    ])
             ]);
     }
 
@@ -42,28 +74,44 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label("Category Name")
+                    ->sortable()
                     ->searchable(),
+
                 TextColumn::make('products_count')
                     ->counts('products')
                     ->sortable(),
+
                 IconColumn::make('is_visible')
+                    ->label('Visibility')
                     ->boolean()
+                    ->toggleable()
                     ->trueIcon(Heroicon::OutlinedEye),
+
+                TextColumn::make('parent_Id')
+                    ->label('Parent')
+                    ->toggleable(),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])
+
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
