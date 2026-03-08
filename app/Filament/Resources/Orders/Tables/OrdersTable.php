@@ -35,13 +35,7 @@ class OrdersTable
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge(),
-                TextColumn::make('total_price')
-                    ->money()
-                    ->summarize([
-                        Sum::make()->money(),
-                        Average::make()->money()
-                    ])
-                    ->sortable(),
+
                 TextColumn::make('shipping_price')
                     ->money()
                     ->sortable(),
@@ -59,6 +53,7 @@ class OrdersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 TrashedFilter::make(),
             ])
